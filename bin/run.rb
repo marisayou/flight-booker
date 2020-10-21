@@ -53,31 +53,37 @@ def welcome
                 # FIXME: This thing can return nothing. We shouldn't be asking which one do you want when this happens because that gets stuck in an infinite loop...... HA HA HA 
                 flights = SearchedFlight.find_and_print_flight(origin, destination, departure)
                 puts "Which one do you want"
-                flight_index = gets.strip.to_i - 1  # humans don't zero-index :)
+                chosen_searched_flight = nil
+                while true 
+                    flight_index = gets.strip.to_i - 1  # humans don't zero-index :)
                 
-                # some err handling
-                while flight_index >= flights.length || flight_index < 0
-                    puts "That doesn't seem like a valid number. Try again."
-                    flight_index = gets.strip.to_i
-                end
-                
-                chosen_searched_flight = flights[flight_index]
-                # book that flight for this person
-                puts "Ok.... So you want to book this flight for #{chosen_searched_flight.price}. Is that right?"
-                if gets.strip == "yes"
-                    if passenger.balance < chosen_searched_flight.price
-                        puts "Insufficient balance. Purchase denied."
-                        next
+                    # some err handling
+                    while flight_index >= flights.length || flight_index < 0
+                        puts "That doesn't seem like a valid number. Try again."
+                        flight_index = gets.strip.to_i - 1
                     end
-                    flight = Flight.find_matching_flight(chosen_searched_flight)
-                    if flight == nil
-                        flight = Flight.create_from_searchedflight(chosen_searched_flight)
+                    
+                    chosen_searched_flight = flights[flight_index]
+                    # book that flight for this person
+                    puts "Ok.... So you want to book this flight for #{chosen_searched_flight.price}. Is that right? (yes/no)"
+                    confirm_flight = gets.strip
+                    if confirm_flight == "yes"
+                        break
                     end
-                    ticket = Ticket.create({passenger_id: passenger.id, flight_id: flight.id, price: chosen_searched_flight.price})
-                    passenger.deduct_money_from_account(chosen_searched_flight.price)
-                else
-                    puts "No. Goodbye" # TODO: 
+                    puts "No? Then choose another flight"
                 end
+            
+                if passenger.balance < chosen_searched_flight.price
+                    puts "Insufficient balance. Purchase denied."
+                    next
+                end
+                flight = Flight.find_matching_flight(chosen_searched_flight)
+                if flight == nil
+                    flight = Flight.create_from_searchedflight(chosen_searched_flight)
+                end
+                ticket = Ticket.create({passenger_id: passenger.id, flight_id: flight.id, price: chosen_searched_flight.price})
+                passenger.deduct_money_from_account(chosen_searched_flight.price)
+                puts "Congrats! You have booked a ticket from #{origin} to #{destination} for #{departure}!"
             elsif answer == "3"
                 all_tickets = Ticket.where(:passenger_id => passenger.id)
                 num = 1
@@ -131,12 +137,8 @@ def signup
     puts "Enter your name: "
     name = gets.strip
 
-    p1 = Passenger.create
-    p1.name = name 
-    p1.username = candidate_username
-    p1.password = pw
-    p1.balance = 0.00
-    p1.save
+    p1 = Passenger.create({name: name, username: candidate_username, password: pw, balance: 0.00})
+    
 end
     
 
