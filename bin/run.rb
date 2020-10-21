@@ -11,15 +11,15 @@ def welcome
             puts "  3. Exit"
             answer = gets.strip
             if answer == "1"
-                passenger = login
+                passenger = Passenger.login
                 while passenger == nil
                     puts "Login failed. Try again"
-                    passenger = login
+                    passenger = Passenger.login
                     # TODO: make it end somehow
                 end
                 loggedin = true
             elsif answer == "2"
-                signup
+                Passenger.signup
             elsif answer == "3"
                 puts "Goodbye."
                 exit
@@ -32,7 +32,7 @@ def welcome
             puts "Hello #{passenger.name}. Why are you here?"
             puts "  1. View/Add Balance"
             puts "  2. Find and Book flights"
-            puts "  3. Manage My Tickets"
+            puts "  3. View My Tickets"
             puts "  4. Logout"
 
             answer = gets.strip
@@ -85,20 +85,7 @@ def welcome
                 passenger.deduct_money_from_account(chosen_searched_flight.price)
                 puts "Congrats! You have booked a ticket from #{origin} to #{destination} for #{departure}!"
             elsif answer == "3"
-                all_tickets = Ticket.where(:passenger_id => passenger.id)
-                num = 1
-                puts "Here are your tickets."
-                puts "Ticket #\tOrigin\t\tDestination\tDeparture Date"
-                # FIXME: this can return nothing! gracefully handle that
-                all_tickets.each {|t| 
-                    # Rodrigo: Add the carrier info here
-                    puts "  #{num}\t#{t.flight.origin}\t#{t.flight.destination}\t#{t.flight.departure}"
-                    # Marisa: Add features
-                    # 1. Sort by 
-                    # 2. Filter for a specific destination.
-                    num += 1
-                }
-                # TODO: Add option to cancel ticket
+                passenger.get_info_from_tickets
             elsif answer == "4"
                 puts "Ok. Bye!"
                 loggedin = false
@@ -107,38 +94,6 @@ def welcome
             end
         end
     end
-end
-
-# A method for handling user interaction to log in.
-def login
-    puts "Enter your username: "
-    user_id = gets.strip
-    puts "Enter your password: " 
-    user_pw = gets.strip  # TODO: Is there a way to get user input string without showing it on the console? 
-    passenger = Passenger.login(user_id, user_pw)
-    return passenger
-end 
-
-# A method for handling user interaction to sign up.
-# TODO: Maybe move some of the signup logic here to passenger class itself.
-def signup
-    puts "Enter a username: "
-    candidate_username = gets.strip
-    existing_pass = Passenger.find_by(username: candidate_username)
-    while existing_pass != nil
-        puts "This username is taken. Enter in another username: "
-        candidate_username = gets.strip
-        existing_pass = Passenger.find_by(username: candidate_username)
-    end
-    
-    puts "Password: "
-    pw = gets.strip
-
-    puts "Enter your name: "
-    name = gets.strip
-
-    p1 = Passenger.create({name: name, username: candidate_username, password: pw, balance: 0.00})
-    
 end
     
 
