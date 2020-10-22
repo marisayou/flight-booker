@@ -4,7 +4,10 @@ def welcome
     while true
         loggedin = false
         passenger = nil
+
         while !loggedin
+            # Show this option menu while no user is logged in. 
+            # After a new user signs up, he/she will return to this menu before logging in.
             puts "Welcome to Flight Booker. Select the action you want to take."
             puts "  1. Login"
             puts "  2. Sign up"
@@ -15,7 +18,6 @@ def welcome
                 while passenger == nil
                     puts "Login failed. Try again"
                     passenger = Passenger.login
-                    # TODO: make it end somehow
                 end
                 loggedin = true
             elsif answer == "2"
@@ -29,6 +31,8 @@ def welcome
         end
 
         while loggedin
+            # Show this menu while user is logged in. Unless the user chooses to logout, 
+            # he/she will return to this menu after completing any of the other options
             puts "Hello #{passenger.name}. Why are you here?"
             puts "  1. View/Add Balance"
             puts "  2. Find and Book flights"
@@ -51,26 +55,26 @@ def welcome
                 destination = gets.strip
                 puts "When? (YYYY-MM-DD)"
                 departure = gets.strip.to_date
-                flights = SearchedFlight.find_and_print_flight(origin, destination, departure)
+                searched_flights = SearchedFlight.find_and_print_flight(origin, destination, departure)
 
-                if flights == nil || flights.length == 0
+                # Goes back to main logged-in menu if no flights match the user's search
+                if searched_flights == nil || searched_flights.length == 0
                     puts "Sorry! No flights match your search.\n\n"
                     next
                 end
-                puts "Which one do you want?"
 
+                puts "Which one do you want?"
                 chosen_searched_flight = nil
-                while true 
-                    flight_index = gets.strip.to_i - 1  # humans don't zero-index :)
                 
-                    # some err handling
-                    while flight_index >= flights.length || flight_index < 0
+                # Continue asking user to choose a flight until his/her choice is a valid flight
+                while true 
+                    flight_index = gets.strip.to_i - 1  
+                    while flight_index >= searched_flights.length || flight_index < 0
                         puts "That doesn't seem like a valid number. Try again."
                         flight_index = gets.strip.to_i - 1
                     end
                     
-                    chosen_searched_flight = flights[flight_index]
-                    # book that flight for this person
+                    chosen_searched_flight = searched_flights[flight_index]
 
                     puts "Ok.... So you want to book this flight for #{'%.2f' % chosen_searched_flight.price}. Is that right? (yes/no)"
 
@@ -80,12 +84,14 @@ def welcome
                     end
                     puts "No? Then choose another flight"
                 end
-            
+                
                 if passenger.balance < chosen_searched_flight.price
                     puts "Insufficient balance. Purchase denied."
                     next
-
                 end
+
+                # If there is a flight in the flights table that matches the flight the user chose (including price), then choose that flight from the DB.
+                # Otherwise, create a new Flight and save it in the table.
                 flight = Flight.find_matching_flight(chosen_searched_flight)
                 if flight == nil
                     flight = Flight.create_from_searchedflight(chosen_searched_flight)

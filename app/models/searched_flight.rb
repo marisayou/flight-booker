@@ -5,7 +5,7 @@
 require_relative '../../bin/api_info'
 
 class SearchedFlight
-    attr_accessor :origin, :destination, :departure, :carrier_id, :price
+    attr_reader :origin, :destination, :departure, :carrier_id, :price
 
     def initialize(origin, destination, departure, carrier_id, price)
         @origin = origin.split.map { |word| word.capitalize }.join(" ")

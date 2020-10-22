@@ -39,6 +39,8 @@ use wants to view his/her ticket and flight information. The relationship betwee
 When the user views ticket info, it would also be nice for the user to be able to cancel a flight. This might get more complicated if there were penalties for cancelling
 tickets. Also, the flight would have to be deleted from both the flights and tickets tables.
 
+Should also not include tickets of flights that have already happened when the user chooses to View Tickets.
+
 - Present any code you would like to highlight.
 2 while loops within the main while loop in welcome. 1 is for displaying the menu the user will see if not logged in yet, and 1 is for displaying the menu if the user is logged in.
 

@@ -2,6 +2,7 @@ class Flight < ActiveRecord::Base
     has_many :tickets
     has_many :passengers, through: :tickets
 
+    # Checks whether a searched flight already exists in the DB
     def self.find_matching_flight(searchedflight)
         self.find_by({
             origin: searchedflight.origin,
@@ -12,6 +13,7 @@ class Flight < ActiveRecord::Base
         })
     end
 
+    # Create a new Flight instance and save in flights table if it doesn't already exist in the table.
     def self.create_from_searchedflight(searchedflight)
         origin = searchedflight.origin
         destination = searchedflight.destination
