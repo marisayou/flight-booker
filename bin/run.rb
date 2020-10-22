@@ -37,13 +37,15 @@ def welcome
 
             answer = gets.strip
             if answer == "1"
-                puts "Your current balance is $#{passenger.balance}."
+                puts "Your current balance is $#{'%.2f' % passenger.balance}."
                 puts "How much do you want to add to your balance?"
                 to_add = gets.to_i
                 passenger.add_money_to_account(to_add)
-                puts "Thank you. Your new balance is $#{passenger.balance}."
+                puts "Thank you. Your new balance is $#{'%.2f' % passenger.balance}.\n\n"
+                puts "Press ENTER to continue"
+                gets
             elsif answer == "2"
-                puts "Where are you"
+                puts "Where are you?"
                 origin = gets.strip
                 puts "Where do you wanna go?"
                 destination = gets.strip
@@ -52,7 +54,11 @@ def welcome
                 departure = gets.strip.to_date
                 # FIXME: This thing can return nothing. We shouldn't be asking which one do you want when this happens because that gets stuck in an infinite loop...... HA HA HA 
                 flights = SearchedFlight.find_and_print_flight(origin, destination, departure)
-                puts "Which one do you want"
+                # if !flights
+                #     puts "Sorry! No flights match your search."
+                #     next
+                # end
+                puts "Which one do you want?"
                 chosen_searched_flight = nil
                 while true 
                     flight_index = gets.strip.to_i - 1  # humans don't zero-index :)
@@ -65,7 +71,7 @@ def welcome
                     
                     chosen_searched_flight = flights[flight_index]
                     # book that flight for this person
-                    puts "Ok.... So you want to book this flight for #{chosen_searched_flight.price}. Is that right? (yes/no)"
+                    puts "Ok.... So you want to book this flight for #{'%.2f' % chosen_searched_flight.price}. Is that right? (yes/no)"
                     confirm_flight = gets.strip
                     if confirm_flight == "yes"
                         break
@@ -83,7 +89,9 @@ def welcome
                 end
                 ticket = Ticket.create({passenger_id: passenger.id, flight_id: flight.id, price: chosen_searched_flight.price})
                 passenger.deduct_money_from_account(chosen_searched_flight.price)
-                puts "Congrats! You have booked a ticket from #{origin} to #{destination} for #{departure}!"
+                puts "Congrats! You have booked a ticket from #{origin.capitalize} to #{destination.capitalize} for #{departure}!\n\n"
+                puts "Press ENTER to continue"
+                gets
             elsif answer == "3"
                 passenger.get_info_from_tickets
             elsif answer == "4"

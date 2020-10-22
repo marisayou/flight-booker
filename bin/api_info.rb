@@ -4,8 +4,6 @@ require 'openssl'
 require 'json'
 require_relative '../config/environment'
 
-# Quotes
-
 def access_api(url)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
@@ -51,10 +49,3 @@ def get_flight_info(origin, destination, departure)
     
     results
 end
-
-# generates a uniquely identifiable ID for each of the flight that are queried 
-# by appending the flight carrier ID, origin ID, destination ID, and the departure date.
-# def generate_id(flight)
-#     outboundleg = flight["OutboundLeg"]
-#     return outboundleg["CarrierIds"][0].to_s + outboundleg["OriginId"].to_s + outboundleg["DestinationId"].to_s + outboundleg["DepartureDate"]
-# end

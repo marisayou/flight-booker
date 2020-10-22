@@ -22,11 +22,7 @@ class SearchedFlight
         puts "Available flights: "
         flight_num = 1
         flights.each {|f|
-            # Rodrigo: add the airline information here
-            # 1. create an airline table 
-            # 2. using carrier ID you should be able to print the actual airline name in the string below. 
-            # 3. Maybe you can add a feature to the main menu where the user can see how many times he flied each carrier. 
-            puts "#{flight_num} Origin: #{origin}, Destination: #{destination}, Departure: #{f.departure.to_date}, Price: #{f.price}"
+            puts "#{flight_num}. Origin: #{origin.capitalize}, Destination: #{destination.capitalize}, Departure: #{f.departure.to_date}, Price: #{'%.2f' % f.price}"
             flight_num += 1
         }
         puts "\n"
