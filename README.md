@@ -1,3 +1,49 @@
+# Flight Booker App
+
+Created by[ Marisa You](https://github.com/marisayou), and [Rodrigo Rojas](https://github.com/crrojas88)
+
+## Description
+
+Flight Booker is a no frills CLI application used to find flights to your desired destinations. What Flight Booker lacks in niceties, it makes up for in performance. 
+
+This project is using Ruby and ActiveRecord, along with Sqlite3 for database management. Data is taken from the [SkyScanner API](https://skyscanner.github.io/slate/#api-documentation)
+
+## Installation
+
+Run bundle install to install the required gems.
+```bash
+bundle install
+```
+
+## To Run:
+
+```bash
+ruby bin/run.rb
+```
+
+## Usage
+
+After running **ruby bin/run.rb**  in your terminal you will be prompted with a welcome menu.
+
+
+
+If you do not have an account, you can choose _Sign up_ to create a username and password in order to be able to access your account as well as find and book flights.
+
+After creating an account you will be prompted with a list of options:
+
+
+* View/Add Balance 
+  - Views current balance / adds desired amount to balance.
+* Find and Book Flights 
+  - Find and book a flight by inputting an Origin, Destination, and Date then choose which flight you’d like to book.
+* View My Tickets 
+  - Views current tickets held by that user.
+* Logout 
+  - Logs user out.
+
+
+
+
 # Module One Final Project Guidelines
 
 Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.

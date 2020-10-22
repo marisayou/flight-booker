@@ -27,7 +27,9 @@ class Passenger < ActiveRecord::Base
         puts "Enter your name: "
         name = gets.strip
     
+
         self.create({name: name, username: candidate_username, password: pw, balance: 0.0})
+
     end
 
 
@@ -44,6 +46,7 @@ class Passenger < ActiveRecord::Base
     def get_info_from_tickets
         puts "Here are your tickets\n"
         num = 1
+
         self.tickets.each {|t| 
             puts "#{num} #{t.info}"
             num += 1
@@ -51,5 +54,6 @@ class Passenger < ActiveRecord::Base
         puts "Press ENTER to continue"
         gets
     end
+
 
 end

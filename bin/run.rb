@@ -52,11 +52,13 @@ def welcome
                 puts "When? (YYYY-MM-DD)"
                 departure = gets.strip.to_date
                 flights = SearchedFlight.find_and_print_flight(origin, destination, departure)
+
                 if flights == nil || flights.length == 0
                     puts "Sorry! No flights match your search.\n\n"
                     next
                 end
                 puts "Which one do you want?"
+
                 chosen_searched_flight = nil
                 while true 
                     flight_index = gets.strip.to_i - 1  # humans don't zero-index :)
@@ -69,7 +71,9 @@ def welcome
                     
                     chosen_searched_flight = flights[flight_index]
                     # book that flight for this person
+
                     puts "Ok.... So you want to book this flight for #{'%.2f' % chosen_searched_flight.price}. Is that right? (yes/no)"
+
                     confirm_flight = gets.strip
                     if confirm_flight == "yes"
                         break
@@ -80,6 +84,7 @@ def welcome
                 if passenger.balance < chosen_searched_flight.price
                     puts "Insufficient balance. Purchase denied."
                     next
+
                 end
                 flight = Flight.find_matching_flight(chosen_searched_flight)
                 if flight == nil
@@ -90,6 +95,7 @@ def welcome
                 puts "Congrats! You have booked a ticket from #{origin.capitalize} to #{destination.capitalize} for #{departure}!\n\n"
                 puts "Press ENTER to continue"
                 gets
+
             elsif answer == "3"
                 passenger.get_info_from_tickets
             elsif answer == "4"
@@ -101,6 +107,7 @@ def welcome
         end
     end
 end
+
     
 
 welcome
