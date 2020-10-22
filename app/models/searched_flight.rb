@@ -17,8 +17,10 @@ class SearchedFlight
 
     # returns an array of flights whose origin, destination, and takeoff date match input parameters
     def self.find_and_print_flight(origin, destination, date)
-
         flights = get_flight_info(origin, destination, date)
+        if flights == nil
+            return nil
+        end
         puts "Available flights: "
         flight_num = 1
         flights.each {|f|
@@ -26,6 +28,7 @@ class SearchedFlight
             flight_num += 1
         }
         puts "\n"
-        return flights
+        flights
     end
+    
 end

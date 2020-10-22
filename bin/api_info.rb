@@ -21,12 +21,18 @@ def get_place(query)
     url = URI("https://rapidapi.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?query=#{query}")
 
     response_hash = access_api(url)
+    if response_hash == nil || response_hash["Places"] == nil || response_hash["Places"][0] == nil
+        return nil
+    end
     response_hash["Places"][0]["PlaceId"]
 end
 
 def get_api(origin, destination, date)
     origin = get_place(origin)
     destination = get_place(destination)
+    if origin == nil || destination == nil
+        return nil
+    end
     url = URI("https://rapidapi.p.rapidapi.com/apiservices/browseroutes/v1.0/US/USD/en-US/#{origin}/#{destination}/#{date}?inboundpartialdate=anytime")
 
     response_hash = access_api(url)
@@ -35,9 +41,13 @@ end
 def get_flight_info(origin, destination, departure)
     results = []
 
-    origin = origin.downcase
-    destination = destination.downcase
+    origin = origin
+    destination = destination
     info_hash = get_api(origin, destination, departure)
+    if info_hash == nil || info_hash["Quotes"] == nil
+        return nil
+    end
+
     flights = info_hash["Quotes"].select {|f|
         f["OutboundLeg"]["DepartureDate"].to_date == departure.to_date
     }

@@ -49,15 +49,13 @@ def welcome
                 origin = gets.strip
                 puts "Where do you wanna go?"
                 destination = gets.strip
-                #TODO: Might wanna consider changing the question below to be more like a sequence of year? -> month? -> day?
-                puts "When?"
+                puts "When? (YYYY-MM-DD)"
                 departure = gets.strip.to_date
-                # FIXME: This thing can return nothing. We shouldn't be asking which one do you want when this happens because that gets stuck in an infinite loop...... HA HA HA 
                 flights = SearchedFlight.find_and_print_flight(origin, destination, departure)
-                # if !flights
-                #     puts "Sorry! No flights match your search."
-                #     next
-                # end
+                if flights == nil || flights.length == 0
+                    puts "Sorry! No flights match your search.\n\n"
+                    next
+                end
                 puts "Which one do you want?"
                 chosen_searched_flight = nil
                 while true 
@@ -95,7 +93,7 @@ def welcome
             elsif answer == "3"
                 passenger.get_info_from_tickets
             elsif answer == "4"
-                puts "Ok. Bye!"
+                puts "Ok. Bye!\n\n"
                 loggedin = false
             else
                 puts "Unknown command. Try again."
