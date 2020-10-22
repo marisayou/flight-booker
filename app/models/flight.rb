@@ -7,7 +7,8 @@ class Flight < ActiveRecord::Base
             origin: searchedflight.origin,
             destination: searchedflight.destination,
             departure: searchedflight.departure,
-            carrier_id: searchedflight.carrier_id
+            carrier_id: searchedflight.carrier_id,
+            price: searchedflight.price
         })
     end
 
@@ -16,12 +17,14 @@ class Flight < ActiveRecord::Base
         destination = searchedflight.destination
         departure = searchedflight.departure
         carrier_id = searchedflight.carrier_id
+        price = searchedflight.price
 
         new_flight = self.create({
             origin: origin, 
             destination: destination, 
             departure: departure, 
-            carrier_id: carrier_id
+            carrier_id: carrier_id,
+            price: price
         })
 
         new_flight

@@ -8,9 +8,9 @@ class SearchedFlight
     attr_accessor :origin, :destination, :departure, :carrier_id, :price
 
     def initialize(origin, destination, departure, carrier_id, price)
-        @origin = origin
-        @destination = destination
-        @departure = departure
+        @origin = origin.split.map { |word| word.capitalize }.join(" ")
+        @destination = destination.split.map { |word| word.capitalize }.join(" ")
+        @departure = departure.to_date
         @carrier_id = carrier_id
         @price = price
     end
@@ -24,11 +24,11 @@ class SearchedFlight
         puts "Available flights: "
         flight_num = 1
         flights.each {|f|
-            puts "#{flight_num}. Origin: #{origin.capitalize}, Destination: #{destination.capitalize}, Departure: #{f.departure.to_date}, Price: #{'%.2f' % f.price}"
+            puts "#{flight_num}. Origin: #{f.origin}, Destination: #{f.destination}, Departure: #{f.departure}, Price: $#{'%.2f' % f.price}"
             flight_num += 1
         }
         puts "\n"
         flights
     end
-    
+
 end

@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_054840) do
     t.string "destination"
     t.date "departure"
     t.integer "carrier_id"
+    t.float "price"
   end
 
   create_table "passengers", force: :cascade do |t|

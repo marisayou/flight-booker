@@ -5,6 +5,7 @@ class CreateFlights < ActiveRecord::Migration[5.2]
       t.string :destination
       t.date :departure
       t.integer :carrier_id
+      t.float :price
     end
   end
 end
