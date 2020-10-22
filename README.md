@@ -29,17 +29,36 @@ After running **ruby bin/run.rb**  in your terminal you will be prompted with a 
 
 If you do not have an account, you can choose _Sign up_ to create a username and password in order to be able to access your account as well as find and book flights.
 
-After creating an account you will be prompted with a list of options:
+
+After running bin/run.rb you will be prompted with the following welcome menu:
+
+* Login
+  - Login to your account with a username and password to access account menu.
+* Sign up
+  - Create an account with a username and password.
+* Exit
+  - Exit to terminal.
+
+After creating an account and successfully signing in, you will be prompted with a list of options:
 
 
 * View/Add Balance 
-  - Views current balance / adds desired amount to balance.
+  - Views current balance / Adds desired amount to balance.
 * Find and Book Flights 
   - Find and book a flight by inputting an Origin, Destination, and Date then choose which flight you’d like to book.
 * View My Tickets 
   - Views current tickets held by that user.
 * Logout 
-  - Logs user out.
+  - Logs user out and returns to welcome menu.
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
+
 
 
 

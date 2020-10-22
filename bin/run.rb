@@ -53,6 +53,7 @@ def welcome
                 departure = gets.strip.to_date
                 flights = SearchedFlight.find_and_print_flight(origin, destination, departure)
 
+
                 if flights == nil || flights.length == 0
                     puts "Sorry! No flights match your search.\n\n"
                     next
@@ -108,6 +109,5 @@ def welcome
     end
 end
 
-    
-
+   
 welcome
