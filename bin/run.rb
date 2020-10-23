@@ -120,7 +120,8 @@ def welcome
                     
                     chosen_searched_flight = searched_flights[flight_index]
 
-                    puts "Ok.... So you want to book this flight for #{'%.2f' % chosen_searched_flight.price}. Is that right? (yes/no)"
+
+                    puts "Ok.... So you want to book this flight for $#{'%.2f' % chosen_searched_flight.price}. Is that right? (yes/no)"
 
                     confirm_flight = gets.strip
                     if confirm_flight == "yes"
@@ -136,6 +137,12 @@ def welcome
 
                 if passenger.balance < chosen_searched_flight.price
                     puts "Insufficient balance. Purchase denied."
+                    next
+                end
+
+                # If the user already bought this ticket, they can't rebuy it.
+                if !Ticket.check_duplicate_book(passenger, chosen_searched_flight)
+                    puts "You already bought this ticket! No purchase has been made.\n"
                     next
                 end
 
