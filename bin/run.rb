@@ -58,13 +58,26 @@ def welcome
                 end
                     
             elsif answer == "2"
+                puts "(Enter 'exit' to exit from flight search and booking)"
                 puts "Where are you?"
-
                 origin = gets.strip
+                if origin == "exit"
+                    puts "\n"
+                    next
+                end
                 puts "Where do you wanna go?"
                 destination = gets.strip
+                if destination == "exit"
+                    puts "\n"
+                    next
+                end
                 puts "When? (YYYY-MM-DD)"
-                departure = gets.strip.to_date
+                departure = gets.strip
+                if departure == "exit"
+                    puts "\n"
+                    next
+                end
+                departure = departure.to_date
                 searched_flights = SearchedFlight.find_and_print_flight(origin, destination, departure)
 
                 # Goes back to main logged-in menu if no flights match the user's search
@@ -75,10 +88,14 @@ def welcome
 
                 puts "Which one do you want?"
                 chosen_searched_flight = nil
-                
+                flight_index = nil
                 # Continue asking user to choose a flight until his/her choice is a valid flight
                 while true 
-                    flight_index = gets.strip.to_i - 1  
+                    flight_index = gets.strip
+                    if flight_index == "exit"
+                        break
+                    end
+                    flight_index = flight_index.to_i - 1  
                     while flight_index >= searched_flights.length || flight_index < 0
                         puts "That doesn't seem like a valid number. Try again."
                         flight_index = gets.strip.to_i - 1
@@ -95,6 +112,11 @@ def welcome
                     puts "No? Then choose another flight"
                 end
                 
+                if flight_index == "exit"
+                    puts "\n"
+                    next
+                end
+
                 if passenger.balance < chosen_searched_flight.price
                     puts "Insufficient balance. Purchase denied."
                     next
