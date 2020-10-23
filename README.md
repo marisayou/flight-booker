@@ -4,7 +4,7 @@ Created by[ Marisa You](https://github.com/marisayou), and [Rodrigo Rojas](https
 
 ## Description
 
-Flight Booker is a no frills CLI application used to find flights to your desired destinations. What Flight Booker lacks in niceties, it makes up for in performance. 
+Flight Booker is a no frills CLI application used to find flights to your desired destinations. What Flight Booker lacks in niceties, it makes up for in functionality. 
 
 This project is using Ruby and ActiveRecord, along with Sqlite3 for database management. Data is taken from the [SkyScanner API](https://skyscanner.github.io/slate/#api-documentation)
 
