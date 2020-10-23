@@ -29,17 +29,12 @@ format of YYYY-MM-DD. If an user enters the date in a different format, the prog
 
 Could also add in a feature that allows passengers to book return flights at the same time they book an away flight.
 
-There are certain parts of the program that an user can't exit from, such as if you type in the wrong username/password but you can't remember the right ones
-In that case, it would be useful to be able to exit out of the program without having to ctrl+c. 
-
 Another nice thing to have would be a class and DB table for flight carriers (airlines). Currently, we use carrier id's to be able to identify certain flights, but
 we're not able to actually see the names of those carriers. If we added a DB table and class for carriers, we would also be able to display that information when an 
 use wants to view his/her ticket and flight information. The relationship between carriers and flights would be that each flight belongs to a carrier.
 
 When the user views ticket info, it would also be nice for the user to be able to cancel a flight. This might get more complicated if there were penalties for cancelling
-tickets. Also, the flight would have to be deleted from both the flights and tickets tables.
-
-Should also not include tickets of flights that have already happened when the user chooses to View Tickets.
+tickets. Also, the flight would have to be deleted from both the flights and tickets tables. Should also not include tickets of flights that have already happened when the user chooses to View Tickets.
 
 - Present any code you would like to highlight.
 2 while loops within the main while loop in welcome. 1 is for displaying the menu the user will see if not logged in yet, and 1 is for displaying the menu if the user is logged in.

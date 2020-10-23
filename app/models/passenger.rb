@@ -4,7 +4,7 @@ class Passenger < ActiveRecord::Base
 
     # Finds an instance of Passenger whose username and password match the user's input
     def self.login
-        puts "Enter 'exit' to exit login"
+        puts "(Enter 'exit' to exit login)"
         puts "Enter your username: "
         username = gets.strip
         if username == "exit"
