@@ -15,12 +15,10 @@ def welcome
             answer = gets.strip
             if answer == "1"
                 passenger = Passenger.login
-                if passenger == "exit"
+                #binding.pry
+                if passenger == nil
+                    puts "\nLogin failed."
                     next
-                end
-                while passenger == nil
-                    puts "\nLogin failed. Try again"
-                    passenger = Passenger.login
                 end
                 loggedin = true
             elsif answer == "2"
@@ -71,13 +69,32 @@ def welcome
                     puts "\n"
                     next
                 end
-                puts "When? (YYYY-MM-DD)"
-                departure = gets.strip
-                if departure == "exit"
+                puts "Which year do you wanna go?"
+                year = gets.strip
+                if year == "exit"
                     puts "\n"
                     next
                 end
-                departure = departure.to_date
+                puts "Which month?"
+                month = gets.strip
+                if month == "exit"
+                    puts "\n"
+                    next
+                end
+                if month.size == 1
+                    month = "0" + month
+                end
+                puts "Which date?"
+                date = gets.strip
+                if date == "exit"
+                    puts "\n"
+                    next
+                end
+                if date.size == 1
+                    date = "0" + date
+                end
+
+                departure = "#{year}-#{month}-#{date}".to_date
                 searched_flights = SearchedFlight.find_and_print_flight(origin, destination, departure)
 
                 # Goes back to main logged-in menu if no flights match the user's search

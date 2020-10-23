@@ -8,12 +8,12 @@ class Passenger < ActiveRecord::Base
         puts "Enter your username: "
         username = gets.strip
         if username == "exit"
-            return "exit"
+            return nil
         end
         puts "Enter your password: " 
         password = gets.strip
         if password == "exit"
-            return "exit"
+            return nil
         end
         passenger = self.find_by(username: username, password: password)
         return passenger
