@@ -15,8 +15,11 @@ def welcome
             answer = gets.strip
             if answer == "1"
                 passenger = Passenger.login
+                if passenger == "exit"
+                    next
+                end
                 while passenger == nil
-                    puts "Login failed. Try again"
+                    puts "\nLogin failed. Try again"
                     passenger = Passenger.login
                 end
                 loggedin = true
@@ -42,14 +45,21 @@ def welcome
             answer = gets.strip
             if answer == "1"
                 puts "Your current balance is $#{'%.2f' % passenger.balance}."
-                puts "How much do you want to add to your balance?"
-                to_add = gets.to_i
-                passenger.add_money_to_account(to_add)
-                puts "Thank you. Your new balance is $#{'%.2f' % passenger.balance}.\n\n"
-                puts "Press ENTER to continue"
-                gets
+                puts "Do you want to add to your balance? (yes/no)"
+                add_balance = gets.strip
+                puts "\n"
+                if add_balance == "yes"
+                    puts "How much do you want to add to your balance?"
+                    to_add = gets.to_i
+                    passenger.add_money_to_account(to_add)
+                    puts "Thank you. Your new balance is $#{'%.2f' % passenger.balance}.\n\n"
+                    puts "Press ENTER to continue"
+                    gets
+                end
+                    
             elsif answer == "2"
                 puts "Where are you?"
+
                 origin = gets.strip
                 puts "Where do you wanna go?"
                 destination = gets.strip
