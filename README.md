@@ -15,6 +15,12 @@ Run bundle install to install the required gems.
 bundle install
 ```
 
+Type rake db:migrate in the terminal to run the migrations.
+ 
+```bash
+rake db:migrate
+```
+
 ## To Run:
 
 ```bash
